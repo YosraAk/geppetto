@@ -319,6 +319,38 @@ class CommonClient {
       expect(title).to.equal(textToCheckWith);
     });
   }
+
+  async compareNumberOfElementData(selector, numberToCompareWith, tagName, expectTo, wait = 0) {
+    await this.waitFor(wait);
+    await page.$eval(selector, (el, tagName) => el.getElementsByTagName(tagName).length, tagName).then((number) => {
+      switch (expectTo) {
+        case "greaterThan":
+          expect(number).to.be.greaterThan(numberToCompareWith);
+          break;
+        case "lessThan":
+          expect(number).to.be.lessThan(numberToCompareWith);
+          break;
+        case "equal":
+          expect(number).to.be.equal(numberToCompareWith);
+          break;
+      }
+    });
+  }
+
+  async closeSymfonyToolbar(selector, wait = 0) {
+    await this.isVisible(selector, wait);
+    if (global.visible) {
+      await this.waitForAndClick(selector);
+    }
+  }
+
+  async scrollWaitForAndClick(selector, wait = 0, options = {}) {
+    await this.scrollIntoView(selector);
+    await this.waitFor(wait);
+    await this.waitFor(selector, options);
+    await page.click(selector, options);
+  }
+
 }
 
 module.exports = CommonClient;

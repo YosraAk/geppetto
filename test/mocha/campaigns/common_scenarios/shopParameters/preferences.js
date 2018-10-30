@@ -15,10 +15,7 @@ module.exports = {
         test('should click on "Yes" button to disable multistore', () => client.waitForAndClick(PreferencesPage.enable_or_Disable_multistore_toggle_button.replace('%ID', 4)));
       }
       test('should click on "Save" button', async () => {
-        await client.isVisible(CommonBO.symfony_toolbar_close_button, 2000);
-        if (global.visible) {
-          await client.waitForAndClick(CommonBO.symfony_toolbar_close_button);
-        }
+        await client.closeSymfonyToolbar(CommonBO.symfony_toolbar_close_button, 3000);
         await client.waitForAndClick(PreferencesPage.save_button, 3000);
       });
     }, 'common_client');

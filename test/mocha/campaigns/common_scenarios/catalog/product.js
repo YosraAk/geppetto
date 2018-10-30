@@ -40,16 +40,10 @@ module.exports = {
       test('should set the "Quantity" input', () => client.waitForAndType(AddProduct.Basic_settings.quantity_input, productData.quantity, 2000));
       test('should set the "Price" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.price_input, productData.priceHT));
       for (let i = 0; i < productData.pictures.length; i++) {
-        test('should upload the ' + client.stringifyNumber(i+1) + ' product picture', () => client.uploadFile(AddProduct.Basic_settings.files_input, dataFileFolder, productData.pictures[i]));
+        test('should upload the ' + client.stringifyNumber(i + 1) + ' product picture', () => client.uploadFile(AddProduct.Basic_settings.files_input, dataFileFolder, productData.pictures[i]));
       }
-      test('should close the symfony toolbar', async () => {
-        await page.waitFor(2000);
-        await client.isVisible(CommonBO.symfony_toolbar_close_button, 2000);
-        if (global.visible) {
-          await client.waitForAndClick(CommonBO.symfony_toolbar_close_button);
-        }
-      });
-      test('should click on "Online"', () => client.waitForAndClick(AddProduct.online_switcher, 3000));
+      test('should close the symfony toolbar', () => client.closeSymfonyToolbar(CommonBO.symfony_toolbar_close_button, 3000));
+      test('should click on "Online"', () => client.waitForAndClick(AddProduct.online_switcher));
       test('should check and close the green validation', () => client.waitForAndClick(AddProduct.close_validation_button));
 
       if (productData.type === 'standard') {
@@ -60,7 +54,7 @@ module.exports = {
         scenario('Edit the combinations form', client => {
           test('should select the "Product with combination" radio button', () => client.waitForAndClick(AddProduct.Basic_settings.combination_radio_button));
           test('should go to "Combinations" tab', () => client.waitForAndClick(AddProduct.quantity_combination_tab));
-          test('should choose the combinations', async () => {
+          test('should choose the combinations', async() => {
             await client.waitForAndClick(AddProduct.Combination.attribute_size_checkbox_button.replace('%ID', 1), 1000); // combination size s
             await client.waitForAndClick(AddProduct.Combination.attribute_size_checkbox_button.replace('%ID', 2), 1000); // combination size m
           });
@@ -69,7 +63,10 @@ module.exports = {
             await client.checkTextValue(AddProduct.validation_msg, 'Settings updated.');
             await client.waitForAndClick(AddProduct.close_validation_button);
           });
-          test('should check the appearance of combinations', () => client.waitFor(AddProduct.Combination.combination_tr.replace('%POS', 1), {visible: true, timeout: 10000}));
+          test('should check the appearance of combinations', () => client.waitFor(AddProduct.Combination.combination_tr.replace('%POS', 1), {
+            visible: true,
+            timeout: 10000
+          }));
           if (productData.hasOwnProperty('combinationsQuantities')) {
             scenario('Add quantities to combinations', client => {
               test('should add quantities to combinations', async() => {
@@ -85,7 +82,7 @@ module.exports = {
         scenario('Edit the options form', client => {
           test('should click on "Options" tab', () => client.waitForAndClick(AddProduct.options_tab, 2000));
           if (productData.options.hasOwnProperty('customization')) {
-            test('should add the "Customization field" of catalog', async () => {
+            test('should add the "Customization field" of catalog', async() => {
               await client.waitForAndClick(AddProduct.Options.add_customization_button, 2000);
               await client.waitForAndType(AddProduct.Options.customization_input, productData.options.customization, 2000);
             });

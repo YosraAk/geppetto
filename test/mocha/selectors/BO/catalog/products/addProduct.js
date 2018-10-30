@@ -8,6 +8,8 @@ module.exports = {
     symfony_toolbar: 'a[title="Close Toolbar"]',
     close_validation_button: '.growl-close',
     validation_msg: '#growls-default > .growl-notice > .growl-message:not(:empty)',
+    product_list_link: '#product_form_open_quicknav',
+    right_sidebar_table: '#right-sidebar table.product tbody',
 
     Basic_settings: {
       name_input: '#form_step1_name_1',
@@ -17,6 +19,9 @@ module.exports = {
       quantity_input: '#form_step1_qty_0_shortcut',
       price_input: '#form_step1_price_shortcut',
       files_input: 'input.dz-hidden-input[type="file"]',
+      checked_category_input: '#form_step1_categories input[type="checkbox"][value="%value"]:checked',
+      dropdown_menu_button: '#dropdownMenu',
+      go_to_catalog_link: '#form a.dropdown-item.go-catalog',
       add_feature_button: '#add_feature_button',
       feature_select_button: '#select2-form_step1_features_%ID_feature-container',
       feature_select_option: '#select2-form_step1_features_%ID_feature-results li:nth-child(%OPTION)',
