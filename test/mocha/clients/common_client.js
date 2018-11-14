@@ -10,6 +10,7 @@ let fs = require('fs');
 let options = {
   timeout: 30000,
   headless: false,
+ // slowMo: -1000,
   defaultViewport: {
     width: 0,
     height: 0
@@ -80,7 +81,7 @@ class CommonClient {
 
   async signOutBO() {
     await this.waitForAndClick(CommonBO.employee_infos_icon, 2000);
-    await this.waitForAndClick(CommonBO.logout_button, 2000);
+    await this.waitForAndClick(CommonBO.logout_button, 4000);
   }
 
   async signInFO() {
@@ -338,6 +339,50 @@ class CommonClient {
     await page.$eval(selector, el => el.innerText).then((text) => {
       global.tab[globalVar] = text;
     });
+  }
+
+  async closeSymfonyToolbar(selector, wait = 0) {
+    await this.isVisible(selector, wait);
+    if (global.visible) {
+      await this.waitForAndClick(selector);
+    }
+  }
+
+  async getProductPageNumber(selector, pause = 0) {
+    await this.waitFor(pause);
+    let result = await page.evaluate((selector) => {
+      return document.getElementById(selector).getElementsByTagName("tbody")[0].children.length
+    }, selector);
+    global.productsNumber = await result;
+  }
+
+  async click(selector) {
+    await page.click(selector);
+  }
+
+  async getCustomDate(numberOfDay) {
+    let today = await new Date();
+    await today.setDate(today.getDate() + numberOfDay);
+    let dd = await today.getDate();
+    let mm = await today.getMonth() + 1; //January is 0!
+    let yyyy = await today.getFullYear();
+
+    if (dd < 10) {
+      dd = await '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = await '0' + mm;
+    }
+
+    return await yyyy + '-' + mm + '-' + dd;
+  }
+  addOrderMessage(orderMessage) {
+    return page
+      .scroll(0.900)
+      .waitFor(CreateOrder.order_message_textarea, 90000)
+      .waitFor(2000)
+      .setValue(CreateOrder.order_message_textarea, orderMessage)
   }
 }
 

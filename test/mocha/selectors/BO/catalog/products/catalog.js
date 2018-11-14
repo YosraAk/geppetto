@@ -57,6 +57,10 @@ module.exports = {
       return '#bulk_edition_save_keep';
     },
     success_message: 'div.alert-success div.alert-text',
-    success_close_button: 'div.alert-success button.close'
+    success_close_button: 'div.alert-success button.close',
+    pagination_next: '#pagination_next_url',
+    pagination_previous: '#product_catalog_list li.page-item.previous. a',
+    page_active_number: '#product_catalog_list li.page-item.active input',
+    item_per_page: '#paginator_select_page_limit',
   }
 };

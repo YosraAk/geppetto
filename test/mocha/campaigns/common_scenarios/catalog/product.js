@@ -32,7 +32,7 @@ module.exports = {
     scenario('Create a new product in the Back Office', client => {
       test('should go to "Catalog" page', async () => {
         await client.waitForAndClick(Menu.Sell.Catalog.catalog_menu);
-        await client.waitForAndClick(Menu.Sell.Catalog.products_submenu, 1000);
+        await client.waitForAndClick(Menu.Sell.Catalog.products_submenu);
       });
       test('should click on "New product" button', () => client.waitForAndClick(Catalog.add_new_button, 2000));
       test('should set the "Name" input', () => client.waitForAndType(AddProduct.Basic_settings.name_input, productData.name + global.dateTime));
@@ -40,7 +40,7 @@ module.exports = {
       test('should set the "Quantity" input', () => client.waitForAndType(AddProduct.Basic_settings.quantity_input, productData.quantity, 2000));
       test('should set the "Price" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.price_input, productData.priceHT));
       for (let i = 0; i < productData.pictures.length; i++) {
-        test('should upload the ' + client.stringifyNumber(i+1) + ' product picture', () => client.uploadFile(AddProduct.Basic_settings.files_input, dataFileFolder, productData.pictures[i]));
+        test('should upload the ' + client.stringifyNumber(i + 1) + ' product picture', () => client.uploadFile(AddProduct.Basic_settings.files_input, dataFileFolder, productData.pictures[i]));
       }
       test('should close the symfony toolbar', async () => {
         await page.waitFor(2000);
@@ -65,14 +65,17 @@ module.exports = {
             await client.waitForAndClick(AddProduct.Combination.attribute_size_checkbox_button.replace('%ID', 2), 1000); // combination size m
           });
           test('should click on "Generate" button', () => client.waitForAndClick(AddProduct.Combination.generate_combination_button, 3000));
-          test('should verify the appearance of the green validation', async() => {
+          test('should verify the appearance of the green validation', async () => {
             await client.checkTextValue(AddProduct.validation_msg, 'Settings updated.');
             await client.waitForAndClick(AddProduct.close_validation_button);
           });
-          test('should check the appearance of combinations', () => client.waitFor(AddProduct.Combination.combination_tr.replace('%POS', 1), {visible: true, timeout: 10000}));
+          test('should check the appearance of combinations', () => client.waitFor(AddProduct.Combination.combination_tr.replace('%POS', 1), {
+            visible: true,
+            timeout: 10000
+          }));
           if (productData.hasOwnProperty('combinationsQuantities')) {
             scenario('Add quantities to combinations', client => {
-              test('should add quantities to combinations', async() => {
+              test('should add quantities to combinations', async () => {
                 await client.clearInputAndSetValue(AddProduct.Combination.attribute_quantity_input.replace("%NUMBER", 1), productData.combinationsQuantities.firstQuantity, 4000);
                 await client.clearInputAndSetValue(AddProduct.Combination.attribute_quantity_input.replace("%NUMBER", 2), productData.combinationsQuantities.secondQuantity, 2000);
               });
@@ -99,7 +102,7 @@ module.exports = {
           if (productData.quantities.hasOwnProperty('availability') && productData.quantities.availability === 'default') {
             test('should check "Default behaviour" radio button', () => client.waitForAndClick(AddProduct.Quantity.default_behaviour_radio_button));
           }
-          if(productData.quantities.hasOwnProperty('minimal_quantity')) {
+          if (productData.quantities.hasOwnProperty('minimal_quantity')) {
             test('should set the "Minimum quantity for sale" input', () => client.waitForAndSetValue(AddProduct.Quantity.minimal_quantity_input, productData.quantities.minimal_quantity, 2000));
           }
         }, 'catalog/product');
@@ -107,7 +110,7 @@ module.exports = {
 
       scenario('Save the product then close the green validation', client => {
         test('should click on "Save" button', () => client.waitForAndClick(AddProduct.save_button, 10000));
-        test('should check and close the green validation', async() => {
+        test('should check and close the green validation', async () => {
           await client.checkTextValue(AddProduct.validation_msg, 'Settings updated.');
           await client.waitForAndClick(AddProduct.close_validation_button);
         });
@@ -118,7 +121,7 @@ module.exports = {
     scenario('Go to the front office and search for the created product', client => {
       test('should go to the Front Office', () => client.accessToFO(CommonBO.shopname_link, 1, 6000));
       test('should go switch language to "English"', () => client.switchShopLanguageInFo('en'));
-      test('should search for the created product', async() => {
+      test('should search for the created product', async () => {
         await client.waitForAndClick(HomePage.search_input, 2000);
         await client.waitForAndType(HomePage.search_input, productData.name + global.dateTime, 2000);
         await client.waitForAndClick(HomePage.search_button, 2000);
@@ -141,5 +144,52 @@ module.exports = {
         await client.switchWindow(0);
       });
     }, 'common_client');
+  },
+
+  async checkPaginationBO(client, nextOrPrevious, pageNumber, itemPerPage, close = false, paginateBetweenPages = false) {
+    let selectorButton = nextOrPrevious === 'Next' ? Catalog.pagination_next : Catalog.pagination_previous;
+    await client.waitForAndClick(Menu.Sell.Catalog.products_submenu, 1000);
+    await client.waitForAndSelect(Catalog.item_per_page, itemPerPage, 1000);
+    await client.checkAttributeValue(Catalog.page_active_number, 'value', pageNumber, 'contain', 1000);
+    await client.getProductPageNumber('product_catalog_list', 5000);
+    await expect(global.productsNumber).to.be.at.most(parseInt(itemPerPage));
+    if (paginateBetweenPages) {
+      if (global.ps_mode_dev) {
+        await client.closeSymfonyToolbar(CommonBO.symfony_toolbar_close_button, 1000);
+      }
+      await client.isVisible(selectorButton);
+      await client.clickNextOrPrevious(selectorButton);
+      await client.checkAttributeValue(Catalog.page_active_number, 'value', '2', 'contain', 1000);
+      await client.clearInputAndSetValue(Catalog.page_active_number, pageNumber);
+      await client.keyboardPress('Enter');
+      await client.checkAttributeValue(Catalog.page_active_number, 'value', pageNumber, 'contain', 2000);
+    }
+    if (close)
+      await client.waitForAndSelect(Catalog.item_per_page, "20");
+  },
+
+  async checkPaginationThenCreateProduct(client, productData) {
+    await client.getProductPageNumber('product_catalog_list', 5000);
+    let productNumber = await 20 - global.productsNumber;
+    if (productNumber !== 0) {
+      for (let i = 0; i < productNumber + 1; i++) {
+        await client.waitForAndClick(Menu.Sell.Catalog.products_submenu, 1000);
+        await client.waitForAndClick(Catalog.add_new_button, 2000);
+        await client.waitForAndType(AddProduct.Basic_settings.name_input, productData.name + global.dateTime);
+        await client.waitForAndType(AddProduct.Basic_settings.reference_input, productData.reference);
+        await client.waitForAndType(AddProduct.Basic_settings.quantity_input, productData.quantity);
+        await client.clearInputAndSetValue(AddProduct.Basic_settings.price_input, productData.priceHT);
+        for (let i = 0; i < productData.pictures.length; i++) {
+          await client.uploadFile(AddProduct.Basic_settings.files_input, dataFileFolder, productData.pictures[i]);
+        }
+        await client.closeSymfonyToolbar(CommonBO.symfony_toolbar_close_button, 1000);
+        await client.waitForAndClick(AddProduct.online_switcher, 1000);
+        await client.waitForAndClick(AddProduct.close_validation_button);
+        await client.waitForAndClick(AddProduct.save_button, 4000);
+        await client.checkTextValue(AddProduct.validation_msg, 'Settings updated.');
+        await client.waitForAndClick(AddProduct.close_validation_button);
+      }
+    }
   }
-};
+}
+;

@@ -1,6 +1,8 @@
 const {AccountPage} = require('../../../selectors/FO/accountPage');
 const {ProductPageFO} = require('../../../selectors/FO/productPage');
 const {CheckoutOrderPage} = require('../../../selectors/FO/order/checkoutOrderPage');
+const {Menu} = require('../../../selectors/BO/menu');
+
 module.exports = {
   async createOrderFO(authentication = "connect") {
     scenario('Create order in the Front Office', client => {
@@ -31,5 +33,26 @@ module.exports = {
         test('should click on order with an obligation to pay button', () => client.waitForAndClick(CheckoutOrderPage.confirmation_order_button, 1000));
       }, 'common_client');
     }, 'common_client');
-  }
+  },
+  createOrderBO: function (OrderPage, CreateOrder, productData) {
+    scenario('Create order in the Back Office', client => {
+      test('should go to "Orders" page', async () => {
+        await client.waitForAndClick(Menu.Sell.Orders.orders_menu);
+        await client.waitForAndClick(Menu.Sell.Orders.orders_submenu);
+      });
+      test('should click on "Add new order" button', () => client.waitForAndClick(CreateOrder.new_order_button, 1000));
+      test('should search for a customer', () => client.waitForAndSetValue(CreateOrder.customer_search_input, 'john doe'));
+    //  test('should choose the customer', () => client.waitForAndClick(CreateOrder.choose_customer_button));
+      // test('should search for a product by name', () => client.waitForAndSetValue(CreateOrder.product_search_input, productData.name + global.dateTime));
+      // test('should set the product combination', () => client.waitForAndSelect(CreateOrder.product_combination, global.combinationId));
+      // test('should set the product quantity', () => client.waitForAndSetValue(CreateOrder.quantity_input.replace('%NUMBER', 1), '4'));
+      // test('should click on "Add to cart" button', () => client.waitForAndClick(CreateOrder.add_to_cart_button));
+      // test('should get the basic product price', () => client.getTextInVar(CreateOrder.basic_price_value, global.basic_price));
+      // test('should set the delivery option ', () => client.waitForAndSetValue(CreateOrder.delivery_option, '2,'));
+      // test('should add an order message ', () => client.addOrderMessage('Order message test'));
+      // test('should set the payment type ', () => client.waitForAndSetValue(CreateOrder.payment, 'ps_checkpayment'));
+      // test('should set the order status ', () => client.waitForAndSetValue(OrderPage.order_state_select, '1'));
+      // test('should click on "Create the order"', () => client.waitForAndClick(CreateOrder.create_order_button));
+    }, 'orders/order');
+  },
 };

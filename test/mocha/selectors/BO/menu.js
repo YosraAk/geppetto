@@ -3,16 +3,16 @@ module.exports = {
     dashboard_menu: '#tab-AdminDashboard',
     Sell: {
       Orders: {
-        orders_menu: '#subtab-AdminParentOrders',
-        orders_submenu: '#subtab-AdminOrders',
-        invoices_submenu: '#subtab-AdminInvoices',
+        orders_menu: '#subtab-AdminParentOrders a',
+        orders_submenu: '#subtab-AdminOrders a',
+        invoices_submenu: '#subtab-AdminInvoices a',
         credit_slips_submenu: '#subtab-AdminSlip',
         delivery_slips_submenu: '#subtab-AdminDeliverySlip',
         shopping_carts_submenu: '#subtab-AdminCarts'
       },
       Catalog: {
-        catalog_menu: '#subtab-AdminCatalog',
-        products_submenu: '#subtab-AdminProducts',
+        catalog_menu: '#subtab-AdminCatalog a',
+        products_submenu: '#subtab-AdminProducts a',
         category_submenu: '#subtab-AdminCategories',
         monitoring_submenu: '#subtab-AdminTracking',
         attributes_features_submenu: '#subtab-AdminParentAttributesGroups',
@@ -104,13 +104,13 @@ module.exports = {
         merchant_expertise_submenu: '#subtab-AdminGamification'
       },
       AdvancedParameters: {
-        advanced_parameters_menu: '#subtab-AdminAdvancedParameters',
-        information_submenu: '#subtab-AdminInformation',
+        advanced_parameters_menu: '#subtab-AdminAdvancedParameters a',
+        information_submenu: '#subtab-AdminInformation a',
         performance_submenu: '#subtab-AdminPerformance',
         administration_submenu: '#subtab-AdminAdminPreferences',
         email_submenu: '#subtab-AdminEmails',
         import_submenu: '#subtab-AdminImport',
-        team_submenu: '#subtab-AdminParentEmployees',
+        team_submenu: '#subtab-AdminParentEmployees a',
         profiles_tab: '#subtab-AdminProfiles',
         permissions_tab: '#subtab-AdminAccess',
         database_submenu: '#subtab-AdminParentRequestSql',
