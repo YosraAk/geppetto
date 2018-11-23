@@ -36,8 +36,8 @@ module.exports = {
       });
       test('should click on "New product" button', () => client.waitForAndClick(Catalog.add_new_button, 2000));
       test('should set the "Name" input', () => client.waitForAndType(AddProduct.Basic_settings.name_input, productData.name + global.dateTime));
-      test('should set the "Reference" input', () => client.waitForAndType(AddProduct.Basic_settings.reference_input, productData.reference));
-      test('should set the "Quantity" input', () => client.waitForAndType(AddProduct.Basic_settings.quantity_input, productData.quantity, 2000));
+      test('should set the "Reference" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.reference_input, productData.reference));
+      test('should set the "Quantity" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.quantity_input, productData.quantity, 2000));
       test('should set the "Price" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.price_input, productData.priceHT));
       for (let i = 0; i < productData.pictures.length; i++) {
         test('should upload the ' + client.stringifyNumber(i+1) + ' product picture', () => client.uploadFile(AddProduct.Basic_settings.files_input, dataFileFolder, productData.pictures[i]));
@@ -141,5 +141,21 @@ module.exports = {
         await client.switchWindow(0);
       });
     }, 'common_client');
-  }
+  },
+  checkProductBO(Catalog, productData) {
+    scenario('Check the product creation in the Back Office', client => {
+      test('should go to "Catalog" page', async () => {
+        await client.waitForAndClick(Menu.Sell.Catalog.catalog_menu);
+        await client.waitForAndClick(Menu.Sell.Catalog.products_submenu, 1000);
+      });
+      test('should search for product by name', () => client.searchProductByName(productData.name + dateTime));
+      test('should check the existence of product name', () => client.checkTextValue(Catalog.products_calatogue_product_name_column.replace("%ID", 1), productData.name + dateTime));
+      test('should check the existence of product reference', () => client.checkTextValue(Catalog.products_calatogue_product_reference_column.replace("%ID", 1), productData.reference));
+      test('should check the existence of product category', () => client.checkTextValue(Catalog.products_calatogue_product_category_column.replace("%ID", 1), 'Home'));
+      test('should check the existence of product price TE', () => client.checkProductPriceTE(productData.priceHT));
+      test('should check the existence of product quantity', () => client.checkTextValue(Catalog.products_calatogue_product_quantity_column.replace("%ID", 1), productData.quantity));
+      test('should check the existence of product status', () => client.checkTextValue(Catalog.products_calatogue_product_online_column.replace("%ID", 1), 'check'));
+       test('should click on "Reset button"', () => client.waitForAndClick(Catalog.products_reset_button));
+    }, 'catalog/product');
+  },
 };

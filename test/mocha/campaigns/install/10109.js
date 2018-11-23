@@ -13,10 +13,30 @@ scenario('PR-10109: Install shop with Hindi language', () => {
     });
     test('should go to the install page', async () => {
       await client.openShopURL(global.installFolderName);
-      await client.waitFor(90000);
-      await client.getSelectedValue(Install.StepOne.language_select, 'hi').then(async () => {
-        await install.installShop('hi', selectedValue, true);
-      });
+      await client.waitFor(5000);
     });
+    test('should get selected language', async () => {
+      await client.getSelectedValue(Install.StepOne.installation_language_installation_select, 'hi');
+    });
+    test('should install the step one', async () => {
+      await install.installStepOne('hi', selectedValue, client);
+    });
+
+    test('should install the step two', async () => {
+      await install.installStepTwo(client);
+    });
+    test('should install the step three', async () => {
+      await install.installStepThree(client);
+    });
+    test('should install the step four', async () => {
+      await install.installStepFour(client);
+    });
+    test('should install the step five', async () => {
+      await install.installStepFive(client, '10109');
+    });
+    test('should install the step six', async () => {
+      await install.installStepSix(client);
+    });
+
   }, 'common_client');
-}, 'common_client');
+}, 'common_client', true);

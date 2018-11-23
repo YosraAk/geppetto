@@ -1,47 +1,47 @@
 module.exports = {
   Install: {
     Common: {
-      next_button: '#btNext'
+      installation_next_button: '#btNext'
     },
     StepOne: {
-      language_select: '#langList'
+      installation_language_installation_select: '#langList'
     },
     StepTwo: {
-      terms_and_conditions_checkbox: '#set_license'
+      installation_agree_terms_and_conditions_checkbox: '#set_license'
     },
     StepThree: {
-      system_compatibility_box: '#sheet_system > h3'
+      installation_compatibility_green_box: '#sheet_system > h3.okBlock , #sheet_ > h3.okBlock'
     },
     StepFour: {
-      shop_name_input: '#infosShop',
-      country_select: '#infosCountry_chosen',
-      country_search_input: '#infosCountry_chosen > div > div > input[type="text"]',
-      firstname_input: '#infosFirstname',
-      lastname_input: '#infosName',
-      email_input: '#infosEmail',
-      password_input: '#infosPassword',
-      repeat_password_input: '#infosPasswordRepeat'
+      installation_shop_name_input_field: '#infosShop',
+      installation_country_list_select: '#infosCountry_chosen',
+      installation_country_search_input_field: '#infosCountry_chosen div[class*=chosen-search] > input', //TODO
+      installation_account_first_name_input_field: '#infosFirstname',
+      installation_account_last_name_input_field: '#infosName',
+      installation_account_email_input_field: '#infosEmail',
+      installation_account_password_input_field: '#infosPassword',
+      installation_re_type_password_input_field: '#infosPasswordRepeat'
     },
     StepFive: {
-      database_server_input: 'input#dbServer',
-      database_name_input: 'input#dbName',
-      database_user_input: 'input#dbLogin',
-      database_password_input: 'input#dbPassword',
-      database_test_button: '#btTestDB',
-      database_create_button: '#btCreateDB',
-      database_created_box: '#dbResultCheck'
+      installation_database_server_address_input_field: '#dbServer',
+      installation_database_name_input_field: '#dbName',
+      installation_database_login_input_field: '#dbLogin',
+      installation_database_password_input_field: '#dbPassword',
+      installation_test_database_connection_button: '#btTestDB',
+      installation_database_connection_box: '#btCreateDB',
+      database_created_box: '#dbResultCheck' //@TODO
     },
     StepSix: {
-      create_settings_file_step: 'li[id=process_step_generateSettingsFile][class*="success"]',
-      install_database_step: 'li[id=process_step_installDatabase][class*="success"]',
-      install_default_data_step: 'li[id=process_step_installDefaultData][class*="success"]',
-      create_database_table_step: 'li[id=process_step_populateDatabase][class*="success"]',
-      configure_shop_step: 'li[id=process_step_configureShop][class*="success"]',
-      install_demonstration_data_step: 'li[id=process_step_installFixtures][class*="success"]',
-      install_module_step: 'li[id=process_step_installModules][class*="success"]',
-      install_addons_module_step: 'li[id=process_step_installModulesAddons][class*="success"]',
-      install_theme_step: 'li[id=process_step_installTheme][class*="success"]',
-      finish_installation_step: '#install_process_success > div.clearfix > h2'
+      installation_success_create_file_parameters_title: '#process_step_generateSettingsFile[class="process_step success"]',
+      installation_success_create_database_tables_title: '#process_step_installDatabase[class="process_step success"]',
+      installation_success_create_default_shop_language_title: '#process_step_installDefaultData[class="process_step success"]',
+      installation_success_populate_database_tables_title: '#process_step_populateDatabase[class="process_step success"]',
+      installation_success_configure_shop_information_title: '#process_step_configureShop[class="process_step success"]',
+      installation_success_install_demonstration_data_title: '#process_step_installFixtures[class="process_step success"]',
+      installation_success_install_modules_title: '#process_step_installModules[class="process_step success"]',
+      installation_success_install_addons_modules_title: '#process_step_installModulesAddons[class="process_step success"]',
+      installation_success_install_theme_title: '#process_step_installTheme[class="process_step success"]',
+      installation_installation_finished_title: '#install_process_success > div:nth-of-type(1) > h2' //@TODO
     }
   }
 };

@@ -1,6 +1,6 @@
 module.exports = {
   Menu: {
-    dashboard_menu: '#tab-AdminDashboard',
+    dashboard_menu_list: '#tab-AdminDashboard a', //@TODO
     Sell: {
       Orders: {
         orders_menu: '#subtab-AdminParentOrders',
@@ -43,12 +43,12 @@ module.exports = {
     },
     Improve: {
       Modules: {
-        modules_menu: '#subtab-AdminParentModulesSf',
-        modules_services_submenu: '#subtab-AdminModulesSf',
+        modules_menu: '#subtab-AdminParentModulesSf a',
+        modules_services_submenu: '#subtab-AdminModulesSf a',
         installed_modules_tabs: '#subtab-AdminModulesManage',
         notifications_tabs: '#subtab-AdminModulesNotifications',
         selection_tab: '#subtab-AdminModulesCatalog',
-        modules_catalog_submenu: '#subtab-AdminAddonsCatalog',
+        modules_catalog_submenu: '#subtab-AdminAddonsCatalog a, #subtab-AdminParentModulesCatalog a',
       },
       Design: {
         design_menu: '#subtab-AdminParentThemes',

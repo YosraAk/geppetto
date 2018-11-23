@@ -1,8 +1,8 @@
 module.exports = {
   Authentication: {
-    page_content: 'body',
-    email_input: '#email',
-    password_input: '#passwd',
-    login_button: '#submit_login'
+    authentification_page_content_body: 'body', //@TODO
+    authentification_email_input_field: '#email',
+    authentification_password_input_field: '#passwd',
+    authentification_login_button: '#submit_login'
   }
 };

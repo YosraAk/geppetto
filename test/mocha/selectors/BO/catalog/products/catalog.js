@@ -20,25 +20,28 @@ module.exports = {
     get product_id() {
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(2) > label';
     },
-    get product_name() {
+    get products_calatogue_product_name_column() { //@TODO
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(4) a';
     },
-    get product_reference() {
+    get products_calatogue_product_reference_column() {  //@TODO
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(5)';
     },
-    get product_category() {
+    get products_calatogue_product_category_column() {  //@TODO
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(6)';
     },
-    get product_price() {
+    get products_calatogue_product_price_column() {  //@TODO
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(7) a';
     },
-    get product_quantity() {
+    get products_calatogue_product_quantity_column() {  //@TODO
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(8) a';
     },
-    get product_status() {
+    get product_status() {  //@TODO
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(8) a';
     },
-    get product_filter_name_input() {
+    get products_calatogue_product_online_column() {  //@TODO
+      return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(9) a';
+    },
+    get products_search_name_input_field() { //@TODO
       return this.product_table + ' input[name="filter_column_name"]';
     },
     get product_filter_reference_input() {
@@ -47,11 +50,11 @@ module.exports = {
     get product_filter_category_input() {
       return this.product_table + ' input[name="filter_column_name_category"]';
     },
-    get product_filter_search_button() {
+    get products_search_button() { //@TODO
       return this.product_table + ' button[name="products_filter_submit"]';
     },
-    get product_filter_reset_button() {
-      return this.product_table + ' button[name="products_filter_reset"]';
+    get products_reset_button() {
+      return this.product_table + ' button[name="products_filter_reset"]'; //@TODO
     },
     get product_filter_reorder_button() {
       return this.product_table + ' input[value="Reorder"]';

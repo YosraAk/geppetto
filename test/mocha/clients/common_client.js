@@ -57,7 +57,7 @@ class CommonClient {
   async accessToBO() {
     await page.goto(global.URL + global.adminFolderName);
     await page._client.send('Emulation.clearDeviceMetricsOverride');
-    await this.waitFor(Authentication.page_content);
+    await this.waitFor(Authentication.authentification_page_content_body);
   }
 
   async accessToFO(selector, id, wait = 4000) {
@@ -72,9 +72,9 @@ class CommonClient {
   }
 
   async signInBO() {
-    await this.waitForAndType(Authentication.email_input, global.email);
-    await this.waitForAndType(Authentication.password_input, global.password);
-    await this.waitForAndClick(Authentication.login_button);
+    await this.waitForAndType(Authentication.authentification_email_input_field, global.email);
+    await this.waitForAndType(Authentication.authentification_password_input_field, global.password);
+    await this.waitForAndClick(Authentication.authentification_login_button);
     await this.waitFor(Dashboard.page_content);
   }
 
@@ -161,7 +161,12 @@ class CommonClient {
       case "equal":
         await this.waitFor(wait);
         await this.waitFor(selector);
-        await page.$eval(selector, el => el.innerText).then((text) => expect(text).to.equal(textToCheckWith));
+        await page.$eval(selector, el => el.innerText).then((text) => {
+          if (text.indexOf('\t') != -1) {
+            text = text.replace("\t", "");
+          }
+          expect(text.trim()).to.equal(textToCheckWith)
+        });
         break;
       case "contain":
         await this.waitFor(wait);
@@ -305,6 +310,7 @@ class CommonClient {
   async getSelectedValue(selector, value) {
     await page.waitForSelector(selector, {timeout: 90000});
     global.selectedValue = await page.select(selector, value);
+
   }
 
   async checkSelectedValue(selector, textToCheckWith, wait = 0) {
@@ -360,6 +366,12 @@ class CommonClient {
         await page.$eval(selector, el => el.value).then((text) => expect(text).to.contain(textToCheckWith));
         break;
     }
+  }
+
+  async checkIsNotVisible(selector) {
+    await page.waitFor(2000);
+    await this.isVisible(selector);
+    await expect(visible).to.be.false;
   }
 }
 

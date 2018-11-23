@@ -24,3 +24,6 @@ global.dataFileFolder = './test/mocha/datas/';
 
 global.installFolderName = argv.INSTALL_FOLDER_NAME || '/install-dev';
 global.adminFolderName = argv.ADMIN_FOLDER_NAME || '/admin-dev';
+
+global.test_addons = !argv.TEST_ADDONS; //Cast as boolean
+global.module_tech_name = argv.MODULE || 'ps_legalcompliance';
