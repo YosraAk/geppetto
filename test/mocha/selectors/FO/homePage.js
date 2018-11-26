@@ -1,9 +1,9 @@
 module.exports = {
   HomePage: {
     page_content: 'body',
-    search_input: '.ui-autocomplete-input',
-    search_button: '#search_widget > form > button > i[class*="search"]',
-    product_result_name: '.h3.product-title > a',
+    home_search_product_input_field: '.ui-autocomplete-input', //@Todo
+    home_search_product_icon: '#search_widget > form > button > i[class*="search"]', //@Todo
+    home_product_name_link: '.h3.product-title > a', //@Todo
     language_selector: '#_desktop_language_selector button',
     language_EN: '#_desktop_language_selector li:nth-child(1) > a',
     language_FR: '#_desktop_language_selector li:nth-child(2) > a',

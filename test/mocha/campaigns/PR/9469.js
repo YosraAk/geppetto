@@ -22,10 +22,10 @@ scenario('This scenario is based on the bug described in this PR https://github.
   scenario('Check that the block "Specific References" does not appear', client => {
     test('should go to the Front office', () => client.openShopURL());
     test('should search for the created product', async () => {
-      await client.waitForAndType(HomePage.search_input, productData.name + global.dateTime);
+      await client.waitForAndType(HomePage.home_search_product_input_field, productData.name + global.dateTime);
       await client.keyboardPress('Enter');
     });
-    test('should go to the searched product page', () => client.waitForAndClick(SearchProduct.product_result_name));
+    test('should go to the searched product page', () => client.waitForAndClick(SearchProduct.home_product_name_link));
     test('should check that "Specific References" does not appear', () => client.isNotExisting(ShoppingCartPage.specific_references));
   }, 'common_client');
 }, 'common_client', true);

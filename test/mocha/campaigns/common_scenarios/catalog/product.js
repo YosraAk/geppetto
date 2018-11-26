@@ -119,11 +119,11 @@ module.exports = {
       test('should go to the Front Office', () => client.accessToFO(CommonBO.shopname_link, 1, 6000));
       test('should go switch language to "English"', () => client.switchShopLanguageInFo('en'));
       test('should search for the created product', async() => {
-        await client.waitForAndClick(HomePage.search_input, 2000);
-        await client.waitForAndType(HomePage.search_input, productData.name + global.dateTime, 2000);
-        await client.waitForAndClick(HomePage.search_button, 2000);
+        await client.waitForAndClick(HomePage.home_search_product_input_field, 2000);
+        await client.waitForAndType(HomePage.home_search_product_input_field, productData.name + global.dateTime, 2000);
+        await client.waitForAndClick(HomePage.home_search_product_icon, 2000);
       });
-      test('should go to the product page"', () => client.waitForAndClick(HomePage.product_result_name, 2000));
+      test('should go to the product page"', () => client.waitForAndClick(HomePage.home_product_name_link, 2000));
     }, 'common_client');
   },
   async checkCustomizationInFO(productData, message) {

@@ -12,5 +12,9 @@ module.exports = {
     first_product: '#content article:nth-child(1) div.product-description a',
     quantity_wanted_input: '#quantity_wanted',
     product_availability: '#product-availability',
+    product_FO_product_name_title: '#main h1[itemprop="name"]:nth-child(%ID)',
+    product_FO_product_price_span: '#main span[itemprop="price"]:nth-child(%ID)',
+    product_FO_product_reference_span: '#main span[itemprop="sku"]',
+    product_FO_product_quantity_span: '#product-details > div.product-quantities > span',
   }
 };
